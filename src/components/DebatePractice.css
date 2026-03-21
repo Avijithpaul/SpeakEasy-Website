@@ -1,0 +1,379 @@
+.debate-practice {
+  padding: 1rem 0;
+}
+
+.topic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.debate-topic-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.debate-topic-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.topic-category-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.topic-statement {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.topic-display {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.topic-display.compact {
+  margin-bottom: 1.5rem;
+}
+
+.topic-display h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+.position-label {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.position-label strong {
+  color: var(--accent-light);
+}
+
+.side-prompt {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.side-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.side-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.side-card.pro:hover {
+  border-color: var(--success);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.side-card.con:hover {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.side-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.side-card h4 {
+  font-size: 1.125rem;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.side-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.preparation-section {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.preparation-section h3 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--text-primary);
+}
+
+.preparation-section.opposing {
+  background: var(--bg-elevated);
+}
+
+.opposing-intro {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.argument-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.argument-list li {
+  margin-bottom: 0.25rem;
+}
+
+.argument-list.muted {
+  color: var(--text-muted);
+}
+
+.start-debate-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.start-debate-section p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.debate-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.debate-header h2 {
+  font-size: 1.125rem;
+  font-style: italic;
+}
+
+.debate-timer {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.timer-value {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.timer-value.warning {
+  color: var(--warning);
+}
+
+.timer-value.critical {
+  color: var(--error);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+.timer-bar {
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.timer-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+
+.key-points-reminder {
+  margin-bottom: 1.5rem;
+}
+
+.key-points-reminder h4 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.points-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.point-chip {
+  padding: 0.35rem 0.75rem;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--accent-light);
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.live-speech {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.speech-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  color: var(--error);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--error);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.speech-content {
+  padding: 1.25rem;
+  min-height: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.7;
+}
+
+.speech-content .interim {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.speech-content .placeholder {
+  color: var(--text-muted);
+}
+
+.debate-controls {
+  text-align: center;
+}
+
+.review-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.review-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.review-header h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.review-header p {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.review-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.transcript-review {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.transcript-review h4 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem 0;
+}
+
+.transcript-review p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.review-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.error-card {
+  text-align: center;
+  padding: 3rem 2rem;
+}

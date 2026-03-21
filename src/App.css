@@ -1,0 +1,209 @@
+:root {
+  --bg-primary: #090f1d;
+  --bg-secondary: #101a32;
+  --bg-card: #182544;
+  --bg-elevated: #21315a;
+  --navbar-bg: rgba(9, 15, 29, 0.85);
+  --accent: #ff7a18;
+  --accent-light: #ffb347;
+  --accent-glow: rgba(255, 122, 24, 0.24);
+  --accent-gradient: linear-gradient(135deg, #ff7a18, #ff4d6d);
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2d3a4d;
+  --radius: 12px;
+  --radius-lg: 20px;
+}
+
+[data-theme='light'] {
+  --bg-primary: #f7f8fc;
+  --bg-secondary: #eef2ff;
+  --bg-card: #ffffff;
+  --bg-elevated: #e8edff;
+  --navbar-bg: rgba(247, 248, 252, 0.9);
+  --accent: #ff7a18;
+  --accent-light: #e65a00;
+  --accent-glow: rgba(255, 122, 24, 0.18);
+  --text-primary: #121826;
+  --text-secondary: #4b5565;
+  --text-muted: #6b7280;
+  --border: #d2d9ea;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.container-narrow {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-dark {
+  background: var(--bg-secondary);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  border-color: rgba(255, 122, 24, 0.4);
+  box-shadow: 0 4px 30px var(--accent-glow);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 122, 24, 0.4);
+}
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent-light);
+  border: 2px solid var(--accent);
+}
+
+.btn-outline:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-large {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  color: var(--accent-light);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .container, .container-narrow {
+    padding: 0 1rem;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+}
+
+.main-content > .page-banner + .home-page,
+.main-content > .page-banner + .features-page,
+.main-content > .page-banner + .practice-page,
+.main-content > .page-banner + .about-page,
+.main-content > .page-banner + .speaking-practice,
+.main-content > .page-banner + .reading-practice,
+.main-content > .page-banner + .vocabulary-practice,
+.main-content > .page-banner + .conversation-practice,
+.main-content > .page-banner + .presentation-practice,
+.main-content > .page-banner + .interview-practice,
+.main-content > .page-banner + .debate-practice {
+  padding-top: 0;
+}

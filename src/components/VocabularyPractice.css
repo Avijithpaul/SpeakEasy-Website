@@ -1,0 +1,356 @@
+.vocabulary-practice {
+  padding: 1rem 2rem 2rem;
+}
+
+.vocab-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.stat-card {
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-card span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.stat-card strong {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.progress-bar {
+  position: relative;
+  height: 10px;
+  background: var(--bg-elevated);
+  border-radius: 999px;
+  margin-bottom: 1.7rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+.progress-text {
+  position: absolute;
+  right: 0;
+  top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.word-card {
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-secondary));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.word-badges {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.word-badge {
+  font-size: 0.75rem;
+  color: #fff;
+  background: var(--accent-gradient);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+}
+
+.word-badge.muted {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.word-main {
+  text-align: center;
+}
+
+.word {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+
+.phonetic {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.1rem;
+}
+
+.word-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.listen-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+
+.listen-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-light);
+}
+
+.meaning-toggle-wrap {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.meaning-toggle {
+  border: none;
+  background: transparent;
+  color: var(--accent-light);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.meaning-toggle:hover {
+  text-decoration: underline;
+}
+
+.meaning-section {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.meaning {
+  color: var(--text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.example {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.practice-section {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.practice-section h3 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.mic-controls {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.mic-btn-vocab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mic-btn-vocab:hover {
+  background: var(--accent-light);
+}
+
+.mic-btn-vocab.listening {
+  background: var(--error);
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.live-transcript {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  padding: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.final-text {
+  color: var(--text-primary);
+}
+
+.interim-text {
+  opacity: 0.75;
+}
+
+.placeholder-text {
+  color: var(--text-muted);
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  padding: 0.95rem;
+  border-radius: var(--radius);
+}
+
+.feedback.correct {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid var(--success);
+}
+
+.feedback.incorrect {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+}
+
+.feedback-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.feedback.correct .feedback-icon {
+  background: var(--success);
+}
+
+.feedback.incorrect .feedback-icon {
+  background: var(--error);
+}
+
+.feedback-status {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.feedback.correct .feedback-status {
+  color: var(--success);
+}
+
+.feedback.incorrect .feedback-status {
+  color: var(--error);
+}
+
+.feedback-spoken,
+.feedback-score {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.attempt-history {
+  margin-top: 1rem;
+}
+
+.attempt-history h4 {
+  margin-bottom: 0.45rem;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.attempt-history ul {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.attempt-history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.attempt-history li.correct {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.attempt-history li.incorrect {
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.error-card {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+@media (max-width: 900px) {
+  .vocab-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .vocab-stats-grid,
+  .navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .navigation {
+    display: grid;
+  }
+
+  .mic-controls .btn,
+  .mic-controls .mic-btn-vocab {
+    width: 100%;
+  }
+
+  .feedback {
+    align-items: flex-start;
+  }
+}

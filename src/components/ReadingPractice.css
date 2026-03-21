@@ -1,0 +1,224 @@
+.reading-practice {
+  padding: 1rem 2rem;
+}
+
+.passage-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.passage-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.passage-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.passage-card h3 {
+  font-size: 1.125rem;
+  margin: 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.passage-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.level-easy {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success);
+}
+
+.level-medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+}
+
+.level-hard {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+}
+
+.passage-display {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.passage-header {
+  margin-bottom: 1rem;
+}
+
+.passage-header h2 {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.passage-text {
+  font-size: 1.25rem;
+  line-height: 2;
+  color: var(--text-primary);
+}
+
+.comparison-text {
+  font-size: 1.25rem;
+  line-height: 2;
+}
+
+.comparison-text .match {
+  color: var(--success);
+}
+
+.comparison-text .mismatch {
+  color: var(--error);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.mic-btn-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mic-btn-inline:hover {
+  border-color: var(--accent);
+}
+
+.mic-btn-inline.listening {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.results-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.accuracy-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.accuracy-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+
+.accuracy-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.accuracy-detail {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.dot.match {
+  background: var(--success);
+}
+
+.dot.mismatch {
+  background: var(--error);
+}
+
+.live-transcript {
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.live-transcript h4 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.live-transcript p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.final-text {
+  color: var(--text-primary);
+}
+
+.interim-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.error-card {
+  text-align: center;
+  padding: 3rem 2rem;
+}

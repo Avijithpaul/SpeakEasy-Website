@@ -1,394 +1,275 @@
-import { useMemo, useState } from 'react'
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
-import './VocabularyPractice.css'
+import { useCallback, useMemo, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import FlashCard from './ui/FlashCard'
+import ProgressBar from './ui/ProgressBar'
+import MotionCard from './motion/MotionCard'
+import GlowingButton from './motion/GlowingButton'
+import CelebrationBurst from './motion/CelebrationBurst'
+import AnimatedHeading from './motion/AnimatedHeading'
+import { containerVariants, itemVariants, spring } from '../lib/motion/variants'
+import { vocabularyWords, dailyVocabGoal } from '../data/vocabularyWords'
 
-const vocabularyList = [
-  {
-    id: 'ubiquitous',
-    word: 'Ubiquitous',
-    phonetic: '/yoo-BIK-wi-tuhs/',
-    level: 'Advanced',
-    category: 'General',
-    meaning: 'Present or found everywhere.',
-    example: 'Smartphones are now ubiquitous in modern life.',
-  },
-  {
-    id: 'eloquent',
-    word: 'Eloquent',
-    phonetic: '/EL-uh-kwuhnt/',
-    level: 'Intermediate',
-    category: 'Speaking',
-    meaning: 'Fluent, clear, and persuasive in speech or writing.',
-    example: 'She gave an eloquent presentation at the conference.',
-  },
-  {
-    id: 'resilient',
-    word: 'Resilient',
-    phonetic: '/ri-ZIL-yuhnt/',
-    level: 'Intermediate',
-    category: 'Mindset',
-    meaning: 'Able to recover quickly after difficulties.',
-    example: 'Great learners are resilient when they make mistakes.',
-  },
-  {
-    id: 'meticulous',
-    word: 'Meticulous',
-    phonetic: '/muh-TIK-yuh-luhs/',
-    level: 'Advanced',
-    category: 'Work',
-    meaning: 'Very careful and precise about details.',
-    example: 'He is meticulous when preparing client reports.',
-  },
-  {
-    id: 'ambiguous',
-    word: 'Ambiguous',
-    phonetic: '/am-BIG-yoo-uhs/',
-    level: 'Advanced',
-    category: 'Communication',
-    meaning: 'Open to more than one interpretation.',
-    example: 'Her answer was ambiguous, so the team asked again.',
-  },
-  {
-    id: 'pragmatic',
-    word: 'Pragmatic',
-    phonetic: '/prag-MAT-ik/',
-    level: 'Intermediate',
-    category: 'Decision Making',
-    meaning: 'Focused on practical solutions.',
-    example: 'We need a pragmatic plan to meet the deadline.',
-  },
-  {
-    id: 'ephemeral',
-    word: 'Ephemeral',
-    phonetic: '/ih-FEM-er-uhl/',
-    level: 'Advanced',
-    category: 'Abstract',
-    meaning: 'Lasting for a very short time.',
-    example: 'Social media trends can be ephemeral.',
-  },
-  {
-    id: 'benevolent',
-    word: 'Benevolent',
-    phonetic: '/buh-NEV-uh-luhnt/',
-    level: 'Intermediate',
-    category: 'Character',
-    meaning: 'Kind, generous, and well-meaning.',
-    example: 'The benevolent mentor always helps new students.',
-  },
+const SRS_OPTIONS = [
+  { key: 'hard', label: 'Hard', tint: 'bg-red-400/10 text-red-500/85 border border-red-400/18', interval: 'Review in 1 day' },
+  { key: 'good', label: 'Good', tint: 'bg-amber-400/10 text-amber-600/85 dark:text-amber-300/85 border border-amber-400/18', interval: 'Review in 3 days' },
+  { key: 'easy', label: 'Easy', tint: 'bg-[var(--accent)]/10 text-[var(--accent-light)] border border-[var(--accent)]/18', interval: 'Review in 7 days' },
 ]
 
-function normalizeText(value) {
-  return value.toLowerCase().replace(/[^a-z\s]/g, ' ').replace(/\s+/g, ' ').trim()
+function speakText(text, rate = 0.86) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel()
+    const utterance = new SpeechSynthesisUtterance(text)
+    utterance.lang = 'en-US'
+    utterance.rate = rate
+    speechSynthesis.speak(utterance)
+  }
 }
 
-function editDistance(a, b) {
-  const matrix = Array.from({ length: b.length + 1 }, () => Array(a.length + 1).fill(0))
-
-  for (let i = 0; i <= b.length; i += 1) matrix[i][0] = i
-  for (let j = 0; j <= a.length; j += 1) matrix[0][j] = j
-
-  for (let i = 1; i <= b.length; i += 1) {
-    for (let j = 1; j <= a.length; j += 1) {
-      const cost = a[j - 1] === b[i - 1] ? 0 : 1
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1,
-        matrix[i][j - 1] + 1,
-        matrix[i - 1][j - 1] + cost,
-      )
-    }
-  }
-
-  return matrix[b.length][a.length]
-}
-
-function similarity(a, b) {
-  const maxLength = Math.max(a.length, b.length)
-  if (!maxLength) return 1
-  return 1 - editDistance(a, b) / maxLength
-}
-
-function evaluateAttempt(spokenText, targetWord) {
-  const cleanedTarget = normalizeText(targetWord)
-  const cleanedSpoken = normalizeText(spokenText)
-  const spokenWords = cleanedSpoken.split(' ').filter(Boolean)
-
-  if (!cleanedSpoken) {
-    return { correct: false, score: 0 }
-  }
-
-  if (cleanedSpoken === cleanedTarget) {
-    return { correct: true, score: 100 }
-  }
-
-  if (spokenWords.includes(cleanedTarget)) {
-    return { correct: true, score: 90 }
-  }
-
-  const bestSimilarity = spokenWords.reduce((best, spokenWord) => {
-    return Math.max(best, similarity(spokenWord, cleanedTarget))
-  }, 0)
-
-  const score = Math.round(bestSimilarity * 100)
-  return { correct: bestSimilarity >= 0.82, score }
-}
-
-function VocabularyPractice({ onBack }) {
+function VocabularyPractice() {
+  const [deck, setDeck] = useState([...vocabularyWords])
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [attempts, setAttempts] = useState([])
-  const [showMeaning, setShowMeaning] = useState(false)
-  const [sessionStats, setSessionStats] = useState({
-    attempted: 0,
-    correct: 0,
-    streak: 0,
-    bestStreak: 0,
-  })
-  const [masteredWordIds, setMasteredWordIds] = useState([])
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [learnedToday, setLearnedToday] = useState(0)
+  const [srsStats, setSrsStats] = useState({ easy: 0, good: 0, hard: 0 })
+  const [lastRating, setLastRating] = useState(null)
+  const [celebrateTrigger, setCelebrateTrigger] = useState(0)
+  const [cardKey, setCardKey] = useState(0)
 
-  const {
-    isListening,
-    transcript,
-    interimTranscript,
-    error,
-    isSupported,
-    startListening,
-    stopListening,
-    resetTranscript,
-  } = useSpeechRecognition()
+  const currentWord = deck[currentIndex]
+  const remaining = deck.length - currentIndex
+  const isLastCard = currentIndex === deck.length - 1
 
-  const currentWord = vocabularyList[currentIndex]
-  const progressPercent = ((currentIndex + 1) / vocabularyList.length) * 100
-  const accuracyPercent = useMemo(() => {
-    if (!sessionStats.attempted) return 0
-    return Math.round((sessionStats.correct / sessionStats.attempted) * 100)
-  }, [sessionStats.attempted, sessionStats.correct])
+  const sessionProgress = useMemo(() => ({
+    reviewed: currentIndex,
+    total: vocabularyWords.length,
+  }), [currentIndex])
 
-  const goToWord = (targetIndex) => {
-    setCurrentIndex(targetIndex)
-    setAttempts([])
-    setShowMeaning(false)
-    resetTranscript()
-  }
+  const handleFlip = useCallback(() => {
+    if (!isFlipped) setIsFlipped(true)
+  }, [isFlipped])
 
-  const handleNext = () => {
-    const nextIndex = (currentIndex + 1) % vocabularyList.length
-    goToWord(nextIndex)
-  }
+  const handleRate = useCallback(
+    (rating) => {
+      setSrsStats((prev) => ({ ...prev, [rating]: prev[rating] + 1 }))
+      setLearnedToday((prev) => Math.min(prev + 1, dailyVocabGoal))
+      setLastRating(rating)
 
-  const handlePrevious = () => {
-    const previousIndex = (currentIndex - 1 + vocabularyList.length) % vocabularyList.length
-    goToWord(previousIndex)
-  }
+      if (rating === 'easy' || (rating === 'good' && isLastCard)) {
+        setCelebrateTrigger((t) => t + 1)
+      }
 
-  const handleRandomWord = () => {
-    const randomIndex = Math.floor(Math.random() * vocabularyList.length)
-    goToWord(randomIndex === currentIndex ? (randomIndex + 1) % vocabularyList.length : randomIndex)
-  }
+      setTimeout(() => {
+        setIsFlipped(false)
+        setLastRating(null)
+        setCardKey((k) => k + 1)
 
-  const handleClearCurrentInput = () => {
-    resetTranscript()
-  }
+        if (currentIndex < deck.length - 1) {
+          setCurrentIndex((prev) => prev + 1)
+        } else {
+          setCurrentIndex(0)
+          setCelebrateTrigger((t) => t + 1)
+        }
+      }, 450)
+    },
+    [currentIndex, deck.length, isLastCard],
+  )
 
-  const speakText = (text, rate = 0.86) => {
-    if ('speechSynthesis' in window) {
-      speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = 'en-US'
-      utterance.rate = rate
-      speechSynthesis.speak(utterance)
+  const handleShuffle = useCallback(() => {
+    const shuffled = [...vocabularyWords].sort(() => Math.random() - 0.5)
+    setDeck(shuffled)
+    setCurrentIndex(0)
+    setIsFlipped(false)
+    setLastRating(null)
+    setCardKey((k) => k + 1)
+  }, [])
+
+  const handlePrevious = useCallback(() => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1)
+      setIsFlipped(false)
+      setLastRating(null)
+      setCardKey((k) => k + 1)
     }
-  }
+  }, [currentIndex])
 
-  const handleCheckAttempt = () => {
-    if (isListening || !transcript.trim()) return
-
-    const evaluation = evaluateAttempt(transcript, currentWord.word)
-
-    setAttempts((prev) => [
-      {
-        id: Date.now(),
-        spoken: transcript.trim(),
-        correct: evaluation.correct,
-        score: evaluation.score,
-      },
-      ...prev,
-    ].slice(0, 5))
-
-    setSessionStats((prev) => {
-      const attempted = prev.attempted + 1
-      const correct = prev.correct + (evaluation.correct ? 1 : 0)
-      const streak = evaluation.correct ? prev.streak + 1 : 0
-      const bestStreak = Math.max(prev.bestStreak, streak)
-      return { attempted, correct, streak, bestStreak }
-    })
-
-    if (evaluation.correct) {
-      setMasteredWordIds((prev) => (prev.includes(currentWord.id) ? prev : [...prev, currentWord.id]))
-    }
-
-    setShowMeaning(true)
-  }
-
-  const lastAttempt = attempts[0]
-
-  if (!isSupported) {
+  if (!currentWord) {
     return (
-      <div className="vocabulary-practice">
-        <button className="back-btn" onClick={onBack}>Back to modes</button>
-        <div className="card error-card">
-          <h2>Not Supported</h2>
-          <p>Speech recognition is not supported in your browser.</p>
-        </div>
+      <div className="max-w-lg mx-auto text-center py-16">
+        <p className="text-[var(--text-muted)]">No vocabulary words available.</p>
       </div>
     )
   }
 
+  const stats = [
+    { label: 'Learned Today', value: `${learnedToday}/${dailyVocabGoal}`, color: 'text-[var(--accent-light)]' },
+    { label: 'Remaining', value: remaining, color: 'text-amber-600/80 dark:text-amber-300/80' },
+    { label: 'Easy', value: srsStats.easy, color: 'text-orange-500/75 dark:text-orange-300/75' },
+    { label: 'Hard', value: srsStats.hard, color: 'text-red-500/75 dark:text-red-300/75' },
+  ]
+
   return (
-    <div className="vocabulary-practice">
-      <button className="back-btn" onClick={onBack}>Back to modes</button>
+    <motion.div
+      className="max-w-3xl mx-auto relative"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <CelebrationBurst trigger={celebrateTrigger} />
 
-      <h1 className="section-title">Vocabulary Practice</h1>
-      <p className="section-desc">Practice pronunciation, check feedback, and build consistency word by word.</p>
+      <motion.div variants={itemVariants} className="mb-6">
+        <AnimatedHeading text="Vocabulary Flashcards" size="md" className="mb-1" />
+        <p className="text-sm text-[var(--text-muted)]">Flip, learn, and grow with SpeakEasy</p>
+      </motion.div>
 
-      <div className="vocab-stats-grid">
-        <div className="stat-card">
-          <span>Attempted</span>
-          <strong>{sessionStats.attempted}</strong>
-        </div>
-        <div className="stat-card">
-          <span>Accuracy</span>
-          <strong>{accuracyPercent}%</strong>
-        </div>
-        <div className="stat-card">
-          <span>Current Streak</span>
-          <strong>{sessionStats.streak}</strong>
-        </div>
-        <div className="stat-card">
-          <span>Mastered Words</span>
-          <strong>{masteredWordIds.length}</strong>
-        </div>
-      </div>
-
-      <div className="progress-bar">
-        <div
-          className="progress-fill"
-          style={{ width: `${progressPercent}%` }}
-        />
-        <span className="progress-text">{currentIndex + 1} / {vocabularyList.length}</span>
-      </div>
-
-      <div className="word-card">
-        <div className="word-badges">
-          <span className="word-badge">{currentWord.level}</span>
-          <span className="word-badge muted">{currentWord.category}</span>
-        </div>
-
-        <div className="word-main">
-          <h2 className="word">{currentWord.word}</h2>
-          <p className="phonetic">{currentWord.phonetic}</p>
-          <div className="word-actions">
-            <button className="listen-btn" onClick={() => speakText(currentWord.word)} title="Listen to pronunciation">
-              Listen word
-            </button>
-            <button className="listen-btn" onClick={() => speakText(currentWord.example, 0.94)} title="Listen to example sentence">
-              Listen example
-            </button>
-          </div>
-        </div>
-
-        <div className="meaning-toggle-wrap">
-          <button
-            className="meaning-toggle"
-            onClick={() => setShowMeaning((prev) => !prev)}
-          >
-            {showMeaning ? 'Hide details' : 'Show meaning and example'}
-          </button>
-        </div>
-
-        {showMeaning && (
-          <div className="meaning-section">
-            <p className="meaning">{currentWord.meaning}</p>
-            <p className="example">Example: "{currentWord.example}"</p>
-          </div>
-        )}
-      </div>
-
-      <div className="practice-section">
-        <h3>Say the target word clearly, then check your result.</h3>
-
-        <div className="mic-controls">
-          <button
-            className={`mic-btn-vocab ${isListening ? 'listening' : ''}`}
-            onClick={isListening ? stopListening : startListening}
-          >
-            {isListening ? 'Stop recording' : 'Start recording'}
-          </button>
-
-          <button
-            className="btn btn-primary"
-            onClick={handleCheckAttempt}
-            disabled={isListening || !transcript.trim()}
-          >
-            Check pronunciation
-          </button>
-
-          <button className="btn btn-secondary" onClick={handleClearCurrentInput} disabled={!transcript && !interimTranscript}>
-            Clear input
-          </button>
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-
-        <div className="live-transcript">
-          {transcript || interimTranscript ? (
-            <p>
-              <span className="final-text">{transcript}</span>
-              <span className="interim-text">{interimTranscript}</span>
-            </p>
-          ) : (
-            <p className="placeholder-text">Your speech transcript will appear here.</p>
-          )}
-        </div>
-
-        {lastAttempt && (
-          <div className={`feedback ${lastAttempt.correct ? 'correct' : 'incorrect'}`}>
-            <span className="feedback-icon">{lastAttempt.correct ? 'OK' : 'X'}</span>
-            <div className="feedback-text">
-              <p className="feedback-status">
-                {lastAttempt.correct ? 'Great pronunciation' : 'Needs another try'}
+      {/* Stats grid */}
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6"
+        variants={containerVariants}
+      >
+        {stats.map((stat) => (
+          <MotionCard key={stat.label} delay={0.05} className="!rounded-xl !p-0">
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="px-4 py-3 text-center"
+            >
+              <p className="text-xs text-[var(--text-muted)] font-medium mb-0.5">{stat.label}</p>
+              <p className={`text-xl font-bold ${stat.color}`}>
+                {stat.value}
               </p>
-              <p className="feedback-spoken">You said: "{lastAttempt.spoken}"</p>
-              <p className="feedback-score">Score: {lastAttempt.score}%</p>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          </MotionCard>
+        ))}
+      </motion.div>
 
-        {attempts.length > 1 && (
-          <div className="attempt-history">
-            <h4>Recent attempts</h4>
-            <ul>
-              {attempts.map((attempt) => (
-                <li key={attempt.id} className={attempt.correct ? 'correct' : 'incorrect'}>
-                  <span>{attempt.spoken}</span>
-                  <strong>{attempt.score}%</strong>
-                </li>
+      <motion.div variants={itemVariants}>
+        <ProgressBar
+          value={learnedToday}
+          max={dailyVocabGoal}
+          label="Daily vocabulary goal"
+          color="orange"
+          animated
+          className="mb-8 bg-[var(--bg-card)]/80 backdrop-blur-xl rounded-xl border border-[var(--border)] shadow-card p-4"
+        />
+      </motion.div>
+
+      {/* Flashcard */}
+      <motion.div variants={itemVariants} className="mb-6" key={cardKey}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentWord.id}
+            initial={{ opacity: 0, x: 40, rotateY: -15 }}
+            animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            exit={{ opacity: 0, x: -40, rotateY: 15 }}
+            transition={spring.card}
+          >
+            <FlashCard
+              word={currentWord}
+              isFlipped={isFlipped}
+              onFlip={handleFlip}
+              isActive={isFlipped}
+            >
+              <motion.button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  speakText(currentWord.word)
+                }}
+                whileHover={{ scale: 1.05, x: 4 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-4 self-start flex items-center gap-2 text-sm font-medium text-[var(--accent-light)]"
+              >
+                <svg className="w-4 h-4 text-[var(--accent-light)] opacity-80" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                </svg>
+                Listen pronunciation
+              </motion.button>
+            </FlashCard>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      <motion.div variants={itemVariants} className="flex items-center justify-between mb-6 px-2">
+        <GlowingButton variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0} className="!px-3 !py-1.5 text-xs disabled:opacity-30">
+          ← Previous
+        </GlowingButton>
+        <span className="text-sm font-medium text-[var(--text-muted)] tabular-nums">
+          {sessionProgress.reviewed + 1} of {sessionProgress.total}
+        </span>
+        <GlowingButton variant="ghost" onClick={handleShuffle} className="!px-3 !py-1.5 text-xs">
+          Shuffle ↻
+        </GlowingButton>
+      </motion.div>
+
+      {/* SRS buttons */}
+      <AnimatePresence>
+        {isFlipped && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={spring.smooth}
+            className="space-y-3"
+          >
+            <p className="text-center text-sm font-medium text-[var(--text-muted)]">
+              How well did you know this word?
+            </p>
+            <motion.div
+              className="grid grid-cols-3 gap-3"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {SRS_OPTIONS.map((option) => (
+                <motion.button
+                  key={option.key}
+                  type="button"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  whileTap={{ scale: 0.92 }}
+                  transition={spring.snappy}
+                  onClick={() => handleRate(option.key)}
+                  className={`${option.tint} rounded-xl py-3.5 px-4 will-change-transform`}
+                >
+                  <span className="block font-semibold text-sm">{option.label}</span>
+                  <span className="block text-[11px] opacity-80 mt-0.5">{option.interval}</span>
+                </motion.button>
               ))}
-            </ul>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
 
-      <div className="navigation">
-        <button className="btn btn-secondary" onClick={handlePrevious}>
-          Previous
-        </button>
-        <button className="btn btn-secondary" onClick={handleRandomWord}>
-          Random
-        </button>
-        <button className="btn btn-primary" onClick={handleNext}>
-          Next
-        </button>
-      </div>
-    </div>
+      <AnimatePresence>
+        {lastRating && (
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-4 text-center text-sm text-[var(--text-muted)]"
+          >
+            Rated &ldquo;{lastRating}&rdquo; — moving to next card…
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isLastCard && isFlipped && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={spring.bounce}
+            className="mt-8 rounded-2xl p-6 text-center border border-[var(--accent)]/15 bg-[var(--accent)]/5"
+          >
+            <p className="text-[var(--accent-light)] font-semibold mb-1">
+              Last card in deck!
+            </p>
+            <p className="text-sm text-[var(--text-muted)]">Rate this word to complete the session or shuffle for a new round.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   )
 }
 

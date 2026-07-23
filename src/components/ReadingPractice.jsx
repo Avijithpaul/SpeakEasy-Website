@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
+import BackButton from './ui/BackButton'
 import './ReadingPractice.css'
 
 const passages = [
@@ -38,7 +39,7 @@ function compareTexts(original, spoken) {
   return { results, accuracy, matches, total: originalWords.length }
 }
 
-function ReadingPractice({ onBack }) {
+function ReadingPractice() {
   const [selectedPassage, setSelectedPassage] = useState(null)
   const [comparison, setComparison] = useState(null)
   const {
@@ -73,7 +74,7 @@ function ReadingPractice({ onBack }) {
   if (!isSupported) {
     return (
       <div className="reading-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <div className="card error-card">
           <h2>Not Supported</h2>
           <p>Speech recognition is not supported in your browser.</p>
@@ -85,7 +86,7 @@ function ReadingPractice({ onBack }) {
   if (!selectedPassage) {
     return (
       <div className="reading-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <h1 className="section-title">Read Aloud Practice</h1>
         <p className="section-desc">Choose a passage to practice reading aloud.</p>
 

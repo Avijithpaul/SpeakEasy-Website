@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
+import BackButton from './ui/BackButton'
 import './PresentationPractice.css'
 
 const topics = [
@@ -59,7 +60,7 @@ function formatTime(seconds) {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
 
-function PresentationPractice({ onBack }) {
+function PresentationPractice() {
   const [selectedTopic, setSelectedTopic] = useState(null)
   const [timeLeft, setTimeLeft] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
@@ -135,7 +136,7 @@ function PresentationPractice({ onBack }) {
   if (!isSupported) {
     return (
       <div className="presentation-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <div className="card error-card">
           <h2>Not Supported</h2>
           <p>Speech recognition is not supported in your browser.</p>
@@ -147,7 +148,7 @@ function PresentationPractice({ onBack }) {
   if (!selectedTopic) {
     return (
       <div className="presentation-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <h1 className="section-title">Presentation Practice</h1>
         <p className="section-desc">Choose a topic and practice presenting with a timer.</p>
 

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { getInterviewCategories } from '../lib/api'
+import BackButton from './ui/BackButton'
 import './InterviewPractice.css'
 
-function InterviewPractice({ onBack }) {
+function InterviewPractice() {
   const [interviewCategories, setInterviewCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
@@ -112,9 +113,7 @@ function InterviewPractice({ onBack }) {
   if (!isSupported) {
     return (
       <div className="interview-practice">
-        <button className="back-btn" onClick={onBack}>
-          ← Back to modes
-        </button>
+        <BackButton />
         <div className="card error-card">
           <h2>Not Supported</h2>
           <p>Speech recognition is not supported in your browser.</p>
@@ -126,9 +125,7 @@ function InterviewPractice({ onBack }) {
   if (!selectedCategory) {
     return (
       <div className="interview-practice">
-        <button className="back-btn" onClick={onBack}>
-          ← Back to modes
-        </button>
+        <BackButton />
         <h1 className="section-title">Interview Practice</h1>
         <p className="section-desc">Practice answering common interview questions with AI feedback.</p>
         {isLoading && <p>Loading interview categories...</p>}

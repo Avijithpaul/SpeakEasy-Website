@@ -1,0 +1,50 @@
+[
+  {
+    "id": "behavioral",
+    "title": "Behavioral Questions",
+    "icon": "🧠",
+    "questions": [
+      { "question": "Tell me about a time when you had to deal with a difficult coworker.", "tip": "Use the STAR method: Situation, Task, Action, Result" },
+      { "question": "Describe a situation where you had to meet a tight deadline.", "tip": "Focus on your time management and prioritization skills" },
+      { "question": "Give an example of when you showed leadership.", "tip": "Highlight initiative and positive outcomes" },
+      { "question": "Tell me about a mistake you made and what you learned from it.", "tip": "Be honest, show growth and self-awareness" },
+      { "question": "Describe a time when you had to adapt to a major change at work.", "tip": "Emphasize flexibility and positive attitude" }
+    ]
+  },
+  {
+    "id": "situational",
+    "title": "Situational Questions",
+    "icon": "🎯",
+    "questions": [
+      { "question": "How would you handle a disagreement with your manager?", "tip": "Show respect while standing up for your ideas professionally" },
+      { "question": "What would you do if you were assigned a task you've never done before?", "tip": "Demonstrate willingness to learn and problem-solving" },
+      { "question": "How would you prioritize multiple urgent tasks?", "tip": "Explain your decision-making process" },
+      { "question": "What would you do if a team member wasn't contributing equally?", "tip": "Show diplomacy and conflict resolution skills" },
+      { "question": "How would you handle negative feedback from a client?", "tip": "Emphasize listening, empathy, and solution-focus" }
+    ]
+  },
+  {
+    "id": "common",
+    "title": "Common Questions",
+    "icon": "💬",
+    "questions": [
+      { "question": "Tell me about yourself.", "tip": "Give a 2-minute summary: background, skills, goals" },
+      { "question": "Why do you want to work here?", "tip": "Show research about the company and genuine interest" },
+      { "question": "What are your greatest strengths?", "tip": "Give specific examples that relate to the job" },
+      { "question": "What is your biggest weakness?", "tip": "Be honest but show how you're improving" },
+      { "question": "Where do you see yourself in 5 years?", "tip": "Show ambition aligned with the company's growth" }
+    ]
+  },
+  {
+    "id": "technical",
+    "title": "Technical Questions",
+    "icon": "💻",
+    "questions": [
+      { "question": "Explain a complex technical concept in simple terms.", "tip": "Use analogies and avoid jargon" },
+      { "question": "Describe a challenging technical problem you solved.", "tip": "Walk through your thought process step by step" },
+      { "question": "How do you stay updated with new technologies?", "tip": "Mention specific resources and learning methods" },
+      { "question": "What development methodology do you prefer and why?", "tip": "Show understanding of different approaches" },
+      { "question": "How do you approach debugging a difficult issue?", "tip": "Demonstrate systematic problem-solving" }
+    ]
+  }
+]

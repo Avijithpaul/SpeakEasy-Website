@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1,
+    "title": "Restaurant Ordering",
+    "icon": "🍽️",
+    "context": "You are at a restaurant ready to order food.",
+    "dialogue": [
+      { "role": "waiter", "text": "Good evening! Welcome to La Bella. Are you ready to order?" },
+      { "role": "you", "prompt": "Greet them and ask about the specials" },
+      { "role": "waiter", "text": "Tonight we have grilled salmon with vegetables and our famous mushroom risotto." },
+      { "role": "you", "prompt": "Ask about ingredients or make your order" },
+      { "role": "waiter", "text": "Excellent choice! Would you like anything to drink with that?" },
+      { "role": "you", "prompt": "Order a drink or ask for recommendations" },
+      { "role": "waiter", "text": "Perfect. Your order will be ready in about 15 minutes." }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Job Interview",
+    "icon": "💼",
+    "context": "You are in a job interview for a software developer position.",
+    "dialogue": [
+      { "role": "interviewer", "text": "Thank you for coming in today. Please, tell me a little about yourself." },
+      { "role": "you", "prompt": "Introduce yourself and your background" },
+      { "role": "interviewer", "text": "Interesting. What attracted you to this position?" },
+      { "role": "you", "prompt": "Explain why you want this job" },
+      { "role": "interviewer", "text": "Can you describe a challenging project you worked on?" },
+      { "role": "you", "prompt": "Describe a project and challenges you overcame" },
+      { "role": "interviewer", "text": "Great. Do you have any questions for us?" },
+      { "role": "you", "prompt": "Ask thoughtful questions about the role or company" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Hotel Check-in",
+    "icon": "🏨",
+    "context": "You are checking into a hotel after a long flight.",
+    "dialogue": [
+      { "role": "receptionist", "text": "Good afternoon! Welcome to Grand Hotel. Do you have a reservation?" },
+      { "role": "you", "prompt": "Confirm your reservation with your name" },
+      { "role": "receptionist", "text": "Yes, I found your booking. A double room for 3 nights. May I see your ID please?" },
+      { "role": "you", "prompt": "Provide ID and ask about amenities" },
+      { "role": "receptionist", "text": "Your room is 405 on the fourth floor. Breakfast is from 7 to 10 AM." },
+      { "role": "you", "prompt": "Ask about WiFi, checkout time, or other services" },
+      { "role": "receptionist", "text": "Here's your key card. The elevator is on your right. Enjoy your stay!" }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Doctor Appointment",
+    "icon": "🏥",
+    "context": "You are visiting a doctor for a general checkup.",
+    "dialogue": [
+      { "role": "doctor", "text": "Hello! How are you feeling today? What brings you in?" },
+      { "role": "you", "prompt": "Describe your symptoms or reason for visit" },
+      { "role": "doctor", "text": "I see. How long have you been experiencing this?" },
+      { "role": "you", "prompt": "Explain the duration and any changes" },
+      { "role": "doctor", "text": "Are you taking any medications currently?" },
+      { "role": "you", "prompt": "List any medications or say none" },
+      { "role": "doctor", "text": "Let me examine you. Based on what you've told me, I recommend some tests." },
+      { "role": "you", "prompt": "Ask questions about the tests or treatment" }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Shopping for Clothes",
+    "icon": "👔",
+    "context": "You are shopping for clothes at a department store.",
+    "dialogue": [
+      { "role": "assistant", "text": "Hi there! Can I help you find something today?" },
+      { "role": "you", "prompt": "Describe what you're looking for" },
+      { "role": "assistant", "text": "We have some great options. What size are you looking for?" },
+      { "role": "you", "prompt": "Tell them your size and preferences" },
+      { "role": "assistant", "text": "Here are a few options. The fitting room is over there if you'd like to try them on." },
+      { "role": "you", "prompt": "Ask about colors, prices, or try something on" },
+      { "role": "assistant", "text": "That looks great on you! We also have matching accessories if you're interested." }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Making a Phone Call",
+    "icon": "📞",
+    "context": "You are calling a company to inquire about their services.",
+    "dialogue": [
+      { "role": "operator", "text": "Thank you for calling TechSupport Inc. How may I direct your call?" },
+      { "role": "you", "prompt": "State the reason for your call" },
+      { "role": "operator", "text": "I'll transfer you to the right department. Please hold." },
+      { "role": "support", "text": "Technical support, this is Sarah. How can I help you today?" },
+      { "role": "you", "prompt": "Explain your issue or question in detail" },
+      { "role": "support", "text": "I understand. Let me look into that for you. Can you provide your account number?" },
+      { "role": "you", "prompt": "Provide information and ask follow-up questions" }
+    ]
+  }
+]

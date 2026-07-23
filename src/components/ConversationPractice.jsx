@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { getConversationScenarios } from '../lib/api'
+import BackButton from './ui/BackButton'
 import './ConversationPractice.css'
 
-function ConversationPractice({ onBack }) {
+function ConversationPractice() {
   const [scenarios, setScenarios] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
@@ -99,9 +100,7 @@ function ConversationPractice({ onBack }) {
   if (!isSupported) {
     return (
       <div className="conversation-practice">
-        <button className="back-btn" onClick={onBack}>
-          ← Back to modes
-        </button>
+        <BackButton />
         <div className="card error-card">
           <h2>Not Supported</h2>
           <p>Speech recognition is not supported in your browser.</p>
@@ -113,9 +112,7 @@ function ConversationPractice({ onBack }) {
   if (!selectedScenario) {
     return (
       <div className="conversation-practice">
-        <button className="back-btn" onClick={onBack}>
-          ← Back to modes
-        </button>
+        <BackButton />
         <h1 className="section-title">Conversation Practice</h1>
         <p className="section-desc">Practice real-world conversations with interactive dialogue scenarios.</p>
         {isLoading && <p>Loading scenarios...</p>}

@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useTheme } from '../hooks/useTheme'
+import NavbarAuth from './auth/NavbarAuth'
 import './Navbar.css'
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [theme, setTheme] = useState('night')
+  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-    const initialTheme = savedTheme || (prefersLight ? 'light' : 'night')
-
-    setTheme(initialTheme)
-    document.documentElement.setAttribute('data-theme', initialTheme)
-  }, [])
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'night' ? 'light' : 'night'
-    setTheme(nextTheme)
-    localStorage.setItem('theme', nextTheme)
-    document.documentElement.setAttribute('data-theme', nextTheme)
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/'
+    if (path === '/practice') return location.pathname === '/practice' || location.pathname.startsWith('/practice/')
+    return location.pathname === path
   }
-
-  const isActive = (path) => location.pathname === path
 
   return (
     <nav className="navbar">
@@ -47,44 +37,48 @@ function Navbar() {
         </Link>
 
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className={`nav-link ${isActive('/') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             Home
           </Link>
-          <Link 
-            to="/features" 
+          <Link
+            to="/features"
             className={`nav-link ${isActive('/features') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             Features
           </Link>
-          <Link 
-            to="/practice" 
+          <Link
+            to="/practice"
             className={`nav-link ${isActive('/practice') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             Practice
           </Link>
-          <Link 
-            to="/about" 
+          <Link
+            to="/about"
             className={`nav-link ${isActive('/about') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             About
           </Link>
+          <div className="navbar-mobile-auth">
+            <NavbarAuth />
+          </div>
         </div>
 
         <div className="navbar-actions">
+          <NavbarAuth />
+          <Link to="/practice" className="btn btn-primary">
+            Start Learning
+          </Link>
           <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle light and night mode">
             <span className="theme-icon" aria-hidden="true">{theme === 'night' ? '☀' : '🌙'}</span>
             <span>{theme === 'night' ? 'Light Mode' : 'Night Mode'}</span>
           </button>
-          <Link to="/practice" className="btn btn-primary">
-            Start Learning
-          </Link>
         </div>
 
         <button className="theme-toggle-mobile" onClick={toggleTheme} aria-label="Toggle light and night mode">
@@ -92,12 +86,12 @@ function Navbar() {
           <span>{theme === 'night' ? 'Light' : 'Night'}</span>
         </button>
 
-        <button 
+        <button
           className="navbar-toggle"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
-          <span className={`hamburger ${isMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger ${isMenuOpen ? 'open' : ''}`} />
         </button>
       </div>
     </nav>

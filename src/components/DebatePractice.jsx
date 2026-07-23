@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
+import BackButton from './ui/BackButton'
 import './DebatePractice.css'
 
 const debateTopics = [
@@ -47,7 +48,7 @@ const debateTopics = [
   },
 ]
 
-function DebatePractice({ onBack }) {
+function DebatePractice() {
   const [selectedTopic, setSelectedTopic] = useState(null)
   const [selectedSide, setSelectedSide] = useState(null)
   const [phase, setPhase] = useState('select')
@@ -129,7 +130,7 @@ function DebatePractice({ onBack }) {
   if (!isSupported) {
     return (
       <div className="debate-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <div className="card error-card">
           <h2>Not Supported</h2>
           <p>Speech recognition is not supported in your browser.</p>
@@ -141,7 +142,7 @@ function DebatePractice({ onBack }) {
   if (phase === 'select') {
     return (
       <div className="debate-practice">
-        <button className="back-btn" onClick={onBack}>← Back to modes</button>
+        <BackButton />
         <h1 className="section-title">Debate Practice</h1>
         <p className="section-desc">Choose a topic and defend your position with persuasive arguments.</p>
 

@@ -32,6 +32,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-image:
+    radial-gradient(circle at top left, rgba(255, 122, 24, 0.07), transparent 32%),
+    radial-gradient(circle at top right, rgba(255, 77, 109, 0.05), transparent 35%);
+  background-attachment: fixed;
 }
 
 button {
@@ -51,4 +55,24 @@ a:hover {
 img {
   max-width: 100%;
   height: auto;
+}
+
+@layer utilities {
+  .animate-gradient {
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }

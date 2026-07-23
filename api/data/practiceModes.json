@@ -1,0 +1,60 @@
+{
+  "communicationModes": [
+    {
+      "id": "conversation",
+      "icon": "💬",
+      "title": "Conversations",
+      "description": "Practice real-world dialogue scenarios like ordering food, job interviews, doctor visits, and more.",
+      "scenarios": "6 scenarios",
+      "difficulty": "All Levels",
+      "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=200&fit=crop"
+    },
+    {
+      "id": "presentation",
+      "icon": "🎯",
+      "title": "Presentations",
+      "description": "Practice presenting topics with a countdown timer, speech tracking, and words-per-minute analysis.",
+      "scenarios": "6 topics",
+      "difficulty": "Intermediate",
+      "image": "https://images.unsplash.com/photo-1558403194-611308249627?w=300&h=200&fit=crop"
+    },
+    {
+      "id": "interview",
+      "icon": "💼",
+      "title": "Interview Prep",
+      "description": "Prepare for job interviews with behavioral, situational, and technical questions with tips.",
+      "scenarios": "20 questions",
+      "difficulty": "All Levels",
+      "image": "https://images.unsplash.com/photo-1565688534245-05d6b5be184a?w=300&h=200&fit=crop"
+    },
+    {
+      "id": "debate",
+      "icon": "⚔️",
+      "title": "Debate Practice",
+      "description": "Choose a side on various topics and practice defending your position with timed arguments.",
+      "scenarios": "6 topics",
+      "difficulty": "Advanced",
+      "image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&h=200&fit=crop"
+    }
+  ],
+  "basicModes": [
+    {
+      "id": "speaking",
+      "icon": "🎤",
+      "title": "Free Speaking",
+      "description": "Speak freely and get real-time transcription. Perfect for building confidence."
+    },
+    {
+      "id": "reading",
+      "icon": "📖",
+      "title": "Read Aloud",
+      "description": "Read passages out loud and compare your speech to the original text."
+    },
+    {
+      "id": "vocabulary",
+      "icon": "📝",
+      "title": "Vocabulary",
+      "description": "Learn new words with phonetics and practice pronunciation."
+    }
+  ]
+}
